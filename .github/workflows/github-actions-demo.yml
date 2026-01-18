@@ -1,0 +1,31 @@
+name: Deploy Static Website
+
+# Trigger pipeline on push to main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout your repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Copy files to your server via SSH
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            echo "Deploying static files..."
+            sudo rm -rf /var/www/html/*
+            sudo cp -r $GITHUB_WORKSPACE/* /var/www/html/
+            sudo chown -R ubuntu:ubuntu /var/www/html
+            echo "Deployment completed!"

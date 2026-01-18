@@ -1,0 +1,10 @@
+.card :hover{
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, 0.3);
+}
+body.dark .card{
+    background-color:  #1f1f1f;
+    color: white;
+}
+body.dark .card:hover{
+    box-shadow: 12px 12px 2px 1px rgba(0, 252, 234, 0.8);
+}
